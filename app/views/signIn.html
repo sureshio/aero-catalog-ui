@@ -1,0 +1,29 @@
+<div class="container">
+    <header class="row text-center">
+        <section class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4 padding-0">
+            <div class="page-header" style="margin-top: 0; border-bottom: none">
+                <h1 style="color: white;" class="text-uppercase">A<small>cme</small> C<small>atalog</small></h1>
+                <img class="img-responsive" src="images/header.jpg" style="width: 100%"/>
+            </div>
+        </section>
+    </header>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">
+            <div class="panel panel-default box-shadow--16dp">
+                <div class="panel-body">
+                    <form role="form" ng-submit="login()" novalidate>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="User Name" ng-model="user.userName" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" ng-model="user.password" />
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Sign In</button>
+                        <a ui-sref="sign-up" class="btn btn-primary btn-block" style="margin-bottom: 10px;">New User?Sign Up</a>
+                        <a ui-sref="forgot-password">Forgot Password?</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

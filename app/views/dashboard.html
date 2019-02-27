@@ -1,0 +1,29 @@
+<div ui-view="header"></div>
+<div ui-view="menu"></div>
+<div ui-view=""></div>
+<div ui-view="footer"></div>
+
+<script type="text/ng-template" id="modalQS.html">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Select Question Set</h4>
+  </div>
+  <div class="modal-body">
+  	<form class="form-inline">
+	  	<div class="form-group">	    	
+	    	<select class="form-control input-sm">
+          		<option>Select...</option>
+          		<option>Question Set I</option>
+          		<option>Question Set II</option>
+          		<option>Question Set III</option>
+          	</select>
+	  	</div>	  
+	  	<button class="btn btn-sm btn-success box-shadow--16dp" type="button" ng-click="ok()">Ok</button>
+	  	<button class="btn btn-sm btn-danger box-shadow--16dp" type="button" ng-click="cancel()">Cancel</button>
+	</form>    
+  </div>
+  <!-- <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div> -->
+</script>

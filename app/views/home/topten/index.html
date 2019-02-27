@@ -1,0 +1,60 @@
+<div class="container">
+	<div class="page-header">
+        <a ui-sref="home" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+		<h1 style="color: white;">High Scores</h1>
+	</div>
+	<div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+		<div class="panel-body">
+			<form role="form">
+				<div class="form-group" style="margin-left: 10px; margin-right: 10px;">
+					<div class="row">
+						<label class="control-label">Select Category</label>
+						<select class="form-control" ng-model="category" ng-options="item.name for item in categoryList track by item.id" ng-change="loadHighScoreByCategoryId(category.id)">
+						</select>
+					</div>
+				</div>
+				<button class="btn btn-info box-shadow--16dp" ng-click = "reset()">Reset</button>
+				<a ui-sref="home.showGradeHistory" class="btn btn-primary box-shadow--16dp">View Grade History</a>
+			</form>
+		</div>
+		<table class="table table-striped table-hover">
+			<caption>List of High Scores</caption>
+			<thead>
+				<tr>
+					<th class="clearfix">
+						<a href="javascript:void(0)" class="pull-left" ng-click="sort('rank')">Rank</a>
+						<span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[0].clickCount === 1"></span>
+						<span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[0].clickCount === 2"></span>
+					</th>
+					<th class="clearfix">
+						<a href="javascript:void(0)" class="pull-left" ng-click="sort('playerName')">Player Name</a>
+						<span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[1].clickCount === 1"></span>
+						<span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[1].clickCount === 2"></span>
+					</th>
+					<th class="clearfix">
+						<a href="javascript:void(0)" class="pull-left" ng-click="sort('playerScore')">Player Score</a>
+						<span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[2].clickCount === 1"></span>
+						<span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[2].clickCount === 2"></span>
+					</th>
+				</tr>
+
+				<tr  ng-model = "highScore" ng-repeat="item in highScoreList">
+					<td>{{$index+1}}</td>
+					<td>{{item.player_name}}</td>
+					<td>{{item.player_score}}</td>
+
+				</tr>
+
+			</thead>
+		</table>
+	</div>
+</div>
+<div style="z-index: 5000;" id="loadingDiv" ng-show="loadingDiv">
+    <table align="center">
+        <tr>
+            <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+        </tr>
+    </table>
+</div>

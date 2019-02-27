@@ -1,0 +1,54 @@
+<div class="container">
+	<div class="page-header ">
+        <a ui-sref="home.topTen" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+		<h1 style="color: white;">User Grade History</h1>
+	</div>
+	<div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+		<!-- Table -->
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th class="clearfix">
+						<a href="javascript:void(0)" class="pull-left" ng-click="sort('rank')">Question Set Name</a>
+						<span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[0].clickCount === 1"></span>
+						<span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[0].clickCount === 2"></span>
+					</th>
+					<th class="clearfix">
+						<a href="javascript:void(0)" class="pull-left" ng-click="sort('playerName')">Grade Name</a>
+						<span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[1].clickCount === 1"></span>
+						<span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[1].clickCount === 2"></span>
+					</th>
+					<th class="clearfix">
+						<a href="javascript:void(0)" class="pull-left" ng-click="sort('playerScore')">Achieve Date</a>
+						<span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[2].clickCount === 1"></span>
+						<span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[2].clickCount === 2"></span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr  ng-model = "gradeHistory" ng-repeat="item in gradeHistoryList">
+					<td>{{item.questionSetName}}</td>
+					<td>{{item.gradeName}}</td>
+					<td>{{item.achieveDate}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+		<!--<nav>
+			<ul class="pager">
+				<li><a href="javascript:void(0);" ng-click="previous()">Previous</a></li>
+				<li>{{grid.CURRENT_PAGE}} / {{grid.NUM_PAGES}}</li>
+				<li><a href="javascript:void(0);" ng-click="next()">Next</a></li>
+			</ul>
+		</nav>-->
+	</div>
+</div>
+<div style="z-index: 5000;" id="loadingDiv" ng-show="loadingDiv">
+    <table align="center">
+        <tr>
+            <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+        </tr>
+    </table>
+</div>

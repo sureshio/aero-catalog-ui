@@ -1,0 +1,162 @@
+<div class="container" ng-controller="DashboardController as vm">
+    <div class="page-header clearfix">
+        <h1 style="color: white;" class="pull-left">Dashboard</h1>
+        <a href="javascript:void(0);" class="pull-right btn btn-danger box-shadow--16dp" style="margin-top: 23px;" ng-click="vm.logout()">
+            <span class="glyphicon glyphicon-log-out"></span>
+        </a>
+        <a href="javascript:void(0);" class="pull-right btn btn-default box-shadow--16dp" style="margin-top: 23px; margin-right: 7px;" ng-click="vm.redirectToMyProfile()">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+    <div class="row" style="margin-bottom: 5px;">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <div class="panel panel-default box-shadow--16dp">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Welcome {{vm.info.firstName + ' ' + vm.info.lastName}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class ="row">
+                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                        <a href="javascript:void(0);" class="btn btn-block btn-default effect1 margin-bottom-10"
+                           ng-show="!vm.isSessionAvailableArts" ng-click="vm.showQuestionSet(vm.categoryArts)">
+                            <img src="images/brush-pencil-48.png">
+                            <br>{{vm.categoryArts.name}}
+                        </a>
+                        <div class="btn-group margin-bottom-10 effect1 margin-bottom-10" style="width: 100%" ng-show="vm.isSessionAvailableArts">
+                            <button type="button" class="btn btn-default" style="width: 90%;">
+                                <img src="images/brush-pencil-48.png">
+                                <br>{{vm.categoryArts.name}}</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" style="width: 10%; height: 93px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" ng-click="vm.showQuestionSet(vm.categoryArts)">New Exam</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);" ng-click="vm.continueExam()">Continue Previous Exam</a></li>
+                            </ul>
+                        </div>
+
+                        <a class="btn btn-block btn-default effect1 margin-bottom-10" ng-show="!vm.isSessionAvailableHistory" ng-click="vm.showQuestionSet(vm.categoryHistory)">
+                            <img src="images/Actions-edit-clear-history-icon.png">
+                            <br>{{vm.categoryHistory.name}}
+                        </a>
+                        <div class="btn-group margin-bottom-10 effect1 margin-bottom-10" style="width: 100%" ng-show="vm.isSessionAvailableHistory">
+                            <button type="button" class="btn btn-default" style="width: 90%;">
+                                <img src="images/Actions-edit-clear-history-icon.png">
+                                <br>{{vm.categoryHistory.name}}</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" style="width: 10%; height: 93px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" ng-click="vm.showQuestionSet(vm.categoryHistory)">New Exam</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);" ng-click="vm.continueExam()">Continue Previous Exam</a></li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-block btn-default effect1 margin-bottom-10" ng-show="!vm.isSessionAvailableQuizAssess" ng-click="vm.showQuestionSet(vm.categoryQuizAssess)">
+                            <img src="images/Quiz-Games.png">
+                            <br>{{vm.categoryQuizAssess.name}}
+                        </a>
+                        <div class="btn-group margin-bottom-10 effect1 margin-bottom-10" style="width: 100%" ng-show="vm.isSessionAvailableQuizAssess">
+                            <button type="button" class="btn btn-default" style="width: 90%;">
+                                <img src="images/Quiz-Games.png">
+                                <br>{{vm.categoryQuizAssess.name}}</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" style="width: 10%; height: 93px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" ng-click="vm.showQuestionSet(vm.categoryQuizAssess)">New Exam</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);" ng-click="vm.continueExam()">Continue Previous Exam</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-block btn-default effect1 margin-bottom-10" ng-show="vm.info.admin" ng-click="vm.redirectToOptionMenu()">
+                            <img src="images/Actions-view-list-details-icon.png">
+                            <br>Option</button>
+                        
+                    </div>
+
+                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                        <a class="btn btn-block btn-default effect1 margin-bottom-10" ng-show="!vm.isSessionAvailableScience" ng-click="vm.showQuestionSet(vm.categoryScience)">
+                            <img src="images/microscope-48.png">
+                            <br>{{vm.categoryScience.name}}
+                        </a>
+                        <div class="btn-group margin-bottom-10 effect1 margin-bottom-10" style="width: 100%" ng-show="vm.isSessionAvailableScience">
+                            <button type="button" class="btn btn-default" style="width: 90%;">
+                                <img src="images/microscope-48.png">
+                                <br>{{vm.categoryScience.name}}</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" style="width: 10%; height: 93px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" ng-click="vm.showQuestionSet(vm.categoryScience)">New Exam</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);" ng-click="vm.continueExam()">Continue Previous Exam</a></li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-block btn-default effect1 margin-bottom-10" ng-show="!vm.isSessionAvailableSports" ng-click="vm.showQuestionSet(vm.categorySports)">
+                            <img src="images/Misc-Games-icon.png">
+                            <br>{{vm.categorySports.name}}
+                        </a>
+                        <div class="btn-group margin-bottom-10 effect1 margin-bottom-10" style="width: 100%" ng-show="vm.isSessionAvailableSports">
+                            <button type="button" class="btn btn-default" style="width: 90%;">
+                                <img src="images/Misc-Games-icon.png">
+                                <br>{{vm.categorySports.name}}</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" style="width: 10%; height: 93px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0);" ng-click="vm.showQuestionSet(vm.categorySports)">New Exam</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);" ng-click="vm.continueExam()">Continue Previous Exam</a></li>
+                            </ul>
+                        </div>
+
+                        <a ui-sref="home.topTen" class="btn btn-block btn-default effect1 margin-bottom-10">
+                            <img src="images/Star-Full.png">
+                            <br>Top 10</a>
+                        <!-- <a ui-sref="home.biography.list" class="btn btn-block btn-default effect1 margin-bottom-10">
+                            <img src="images/Photo-Booth-icon.png">
+                            <br>Photo Book
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="z-index: 5000;" id="loadingDiv" ng-show="vm.loadingDiv">
+        <table align="center">
+            <tr>
+                <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/ng-template" id="modalQS.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Select Question Set</h4>
+    </div>
+    <div class="modal-body">
+        <form role="form" novalidate>
+            <div class="form-group">
+                <select class="form-control input-sm" ng-model="vm.questionSet" ng-options="item.name for item in vm.questionSetList track by item.id">
+                </select>
+            </div>
+            <button class="btn btn-sm btn-success box-shadow--16dp" type="button" ng-click="ok()">Ok</button>
+            <button class="btn btn-sm btn-danger box-shadow--16dp" type="button" ng-click="cancel()">Cancel</button>
+        </form>
+    </div>
+    <!-- <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div> -->
+</script>

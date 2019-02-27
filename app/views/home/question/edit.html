@@ -1,0 +1,107 @@
+<div class="container">
+    <div class="page-header">
+        <a ui-sref="home.question.list" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <h1 style="color: white;">Question</h1>
+    </div>
+    <div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">Edit</h3>
+            <small class="pull-left">&nbsp;&nbsp;(Fields marked with * are mandatory)</small>
+        </div>
+        <div class="panel-body">
+            <form role="form" ng-submit="addQuestion()" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label class="control-label">Category Name<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <a href="javascript:void(0);" class="pull-right" ng-show ="isEdit" ng-click="redirectToCategory()">[Add new]</a>
+                            <select class="form-control" ng-model="question.category" ng-options="item.name for item in categoryList track by item.id" ng-change="loadAllQuestionSetsByCategoryId(question.category.id)"
+                                    ng-readonly="!isEdit" ng-show="isEdit">
+                                <option value="">Select...</option>
+                            </select>
+                            <input type="text" class="form-control" ng-model="question.category.name" ng-readonly="!isEdit" ng-show="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">Question Set Name<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <a href="javascript:void(0);" class="pull-right" ng-show ="isEdit" ng-click="redirectToQuestionSet()">[Add new]</a>
+                            <select class="form-control" ng-model="question.questionSet"
+                                    ng-options="questionSet.name for questionSet in questionSetList track by questionSet.id" ng-show="isEdit">
+                                <option value="">Select...</option>
+                            </select>
+                            <input type="text" class="form-control" ng-model="question.questionSet.name" ng-readonly="!isEdit" ng-show="!isEdit"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" >Question<span class="glyphicon glyphicon-asterisk required"></span></label>
+                    <textarea class="form-control" rows="3" cols="20" ng-model="question.text" ng-readonly="!isEdit"></textarea>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="question.isTrueFalse" ng-change="toggleQuestion()" ng-disabled="!isEdit"/> True/False
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6" ng-show="isEdit">
+                            <label class="control-label">Correct Answer<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="question.correctAnswer" ng-show="!question.isTrueFalse" ng-readonly="!isEdit" />
+                            <select class="form-control"
+                                    ng-model="question.correctAnswer"
+                                    ng-show="question.isTrueFalse"
+                                    ng-change="toggleAnswer('correctAnswer', 'wrongAnswer1')"
+                                    ng-options="(item ? 'True':'False') for item in [true, false]" ng-disabled="!isEdit">
+                            </select>
+                        </div>
+                        <div class="col-sm-6" ng-show="!isEdit" >
+                            <label class="control-label">Correct Answer<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="question.correctAnswer" ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-6" ng-show="isEdit">
+                            <label class="control-label">Wrong Answer <span ng-show="!question.isTrueFalse">1</span><span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="question.wrongAnswer1" ng-show="!question.isTrueFalse" ng-readonly="!isEdit"/>
+                            <select class="form-control"
+                                    ng-model="question.wrongAnswer1"
+                                    ng-show="question.isTrueFalse"
+                                    ng-change="toggleAnswer('wrongAnswer1', 'correctAnswer')"
+                                    ng-options="(item ? 'True':'False') for item in [true, false]"
+                                    ng-disabled="!isEdit">
+                            </select>
+                        </div>
+                        <div class="col-sm-6" ng-show="!isEdit">
+                            <label class="control-label">Wrong Answer<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="question.wrongAnswer1" ng-readonly="!isEdit"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="!question.isTrueFalse">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="control-label">Wrong Answer 2<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="question.wrongAnswer2" ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label">Wrong Answer 3<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="question.wrongAnswer3" ng-readonly="!isEdit"/>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success box-shadow--16dp" ng-show ="!isEdit" ng-click="editQuestion()">
+                    <span class="glyphicon glyphicon-edit"></span> Edit</button>&nbsp;
+                <button type="submit" class="btn btn-success box-shadow--16dp" ng-show ="isEdit" ng-click="updateQuestion()">
+                    <span class="glyphicon glyphicon-edit"></span> Update</button>&nbsp;
+                <button type="button" class="btn btn-danger box-shadow--16dp" ng-click="reset()" ng-show ="isEdit" ui-sref="home.question.list">
+                    <span class="glyphicon glyphicon-erase"></span> Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="z-index: 5000;" id="loadingDiv" ng-show="loadingDiv">
+    <table align="center">
+        <tr>
+            <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+        </tr>
+    </table>
+</div>

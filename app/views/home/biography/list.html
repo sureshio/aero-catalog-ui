@@ -1,0 +1,40 @@
+<div class="container" ng-controller="BiographyListCtrl as vm">
+    <div class="page-header">
+        <a ui-sref="home" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-home"></span>
+        </a>
+        <h1 style="color: white;">Photo Book</h1>
+
+    </div>
+    <div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="panel-body">
+            <div class="thumbnail">
+                <img ng-src="{{vm.current.picture | pictureUrl}}">
+                <div class="caption">
+                    <h3>{{vm.current.title}}</h3>
+                    <p ng-bind-html="vm.current.description | rawHtml"></p>
+                </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <a href="javascript:void(0)" ng-click="vm.previous()"><i class="glyphicon glyphicon-chevron-left"></i></a></span>
+                <select class="form-control" ng-model="vm.current"
+                        ng-options="item.title for item in vm.photoList track by item.id"
+                        ng-change="ddlTitle_OnChange()"></select>
+                <span class="input-group-addon">
+                    <a href="javascript:void(0)" ng-click="vm.next()"><i class="glyphicon glyphicon-chevron-right"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <div style="z-index: 5000;" id="loadingDiv" ng-show="vm.loadingDiv">
+        <table align="center">
+            <tr>
+                <td style="padding-top:270px;" align="center"><img src="images/waiting.gif" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+

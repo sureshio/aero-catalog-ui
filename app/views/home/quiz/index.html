@@ -1,0 +1,67 @@
+<div class="container" ng-controller="QuizIndexCtrl as vm">
+    <div class="page-header">
+        <h1 style="color: white;">Quiz</h1>
+    </div>
+    <div class="alert alert-info" ng-show="vm.session.questions.length <= 0">No Questions Found</div>
+    <div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;" ng-show="vm.session.questions.length > 0">
+        <div class="panel-heading"><h3 class="panel-title text-danger">Please do not press F5 or refresh the browser.</h3></div>
+        <ul class="list-group" ng-show="!vm.session.isBackButtonClicked">
+            <li class="list-group-item">
+                <h5 class="list-group-item-heading"><em>{{vm.session.current.question.text}}</em></h5>
+            </li>
+            <li class="list-group-item" ng-repeat="item in vm.session.current.question.options">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Answer" value="{{item.key}}" ng-model="vm.session.current.answer"> {{item.value}}
+                    </label>
+                </div>
+            </li>
+        </ul>
+        <div class="panel-body">
+            <form ng-show="vm.session.isBackButtonClicked">
+                <div class="form-group">
+                    <sup><strong>Last Question</strong></sup>
+                    <div class="alert alert-info">
+                        <em>{{vm.session.current.question.text}}</em>
+                    </div>
+                    <sup><strong>Correct Answer</strong></sup>
+                    <p><strong>{{vm.showCorrectAnswer(vm.session.current.question)}}</strong></p>
+                </div>
+            </form>
+            <button type="button" class="btn btn-sm btn-default box-shadow--16dp"
+                    ng-show="!vm.session.isBackButtonClicked"
+                    ng-click="vm.previous()">Back</button>&nbsp;
+            <button type="submit" class="btn btn-sm btn-danger box-shadow--16dp" ng-click="vm.stopQuiz()">Stop</button>
+            &nbsp;
+            <button type="button" class="btn btn-sm btn-default box-shadow--16dp"
+                    ng-show="vm.session.current.index < vm.session.questions.length - 1"
+                    ng-click="vm.next()">Next</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-warning box-shadow--16dp" ng-click="vm.endQuiz()">End</button>
+        </div>
+        <div class="panel-footer">Right : {{vm.session.total.correct}} out of {{vm.session.total.attempted}} Questions Asked</div>
+    </div>
+    <div style="z-index: 5000;" id="loadingDiv" ng-show="vm.loadingDiv">
+        <table align="center">
+            <tr>
+                <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type="text/ng-template" id="modalTextBox.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title"></h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label class="control-label">{{inputLabel}}</label>
+                <input type="text" class="form-control" placeholder="Your Name" ng-model="player.name">
+            </div>
+            <button class="btn btn-sm btn-success box-shadow--16dp" type="button" ng-click="ok()">Ok</button>
+            <button class="btn btn-sm btn-danger box-shadow--16dp" type="button" ng-click="cancel()">Cancel</button>
+        </form>
+    </div>
+</script>

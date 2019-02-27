@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="page-header">
+        <a ui-sref="home" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-home"></span>
+        </a>
+        <h1 style="color: white">User Profile</h1>
+    </div>
+    <div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit (Field marked with * are mandatory)</h3>
+        </div>
+        <div class="panel-body">
+            <form role="form" ng-submit="addUpdate()" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label class="control-label">First Name<span
+                                class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="profile.firstName" ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">Middle Name</label>
+                            <input type="text" class="form-control" ng-model="profile.middleName" ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">Last Name<span
+                                class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="profile.lastName" ng-readonly="!isEdit"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label class="control-label">Phone No.</label>
+                            <input type="text" class="form-control" ng-model="profile.phoneNumber"
+                                   ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">Mobile No</label>
+                            <input type="text" class="form-control" ng-model="profile.mobileNumber"
+                                   ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">Email</label>
+                            <input type="text" class="form-control" ng-model="profile.email" ng-readonly="!isEdit"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <label class="control-label">Address<span
+                                class="glyphicon glyphicon-asterisk required"></span></label>
+                            <textarea class="form-control" rows="3" cols="20" ng-model="profile.address"
+                                      ng-readonly="!isEdit"></textarea>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control" style="margin-top: -18px; visibility: hidden;"/>
+                            <button type="button" class="btn btn-block btn-primary box-shadow--16dp" ng-disabled="!isEdit"
+                                    ng-click="showUploadForm()">
+                                <span class="glyphicon glyphicon-upload"></span> Change Image
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label class="control-label">City<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="profile.city" ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">State<span
+                                class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="profile.state" ng-readonly="!isEdit"/>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label">Zip<span class="glyphicon glyphicon-asterisk required"></span></label>
+                            <input type="text" class="form-control" ng-model="profile.zip" ng-readonly="!isEdit"/>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success box-shadow--16dp" ng-show="!isEdit" ng-click="enableEditMode()">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                </button>&nbsp;
+                <button type="submit" class="btn btn-success box-shadow--16dp" ng-show="isEdit">
+                    <span class="glyphicon glyphicon-edit"></span> Update
+                </button>&nbsp;
+                <button type="button" class="btn btn-warning box-shadow--16dp" ng-show="isEdit">
+                    <span class="glyphicon glyphicon-remove-circle"></span> Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="z-index: 5000;" id="loadingDiv" ng-show="loadingDiv">
+    <table align="center">
+        <tr>
+            <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+        </tr>
+    </table>
+</div>

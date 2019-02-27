@@ -1,0 +1,133 @@
+<div class="container">
+    <div class="page-header">
+        <a ui-sref="home.option" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <h1 style="color: white;">Question</h1>
+    </div>
+    <div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+        <div class="panel-body">
+            <a class="btn btn-success box-shadow--16dp" ui-sref="home.question.create">
+                <span class="glyphicon glyphicon-plus"></span> Create
+            </a>
+            <a href="javascript:void(0);" ng-click="showQSFilter()" class="btn btn-primary box-shadow--16dp">
+                <span class="glyphicon glyphicon-filter"></span> Search
+            </a>
+            <button type="button" ng-disabled="!checkSelected(ids)" ng-click="removeQuestions()" class="btn btn-danger box-shadow--16dp">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+            <a href="javascript:void(0);" class="btn btn-info box-shadow--16dp" ng-click="refreshQuestionList()">
+                <span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <caption>List of all Questions</caption>
+                <thead>
+                <tr>
+                    <th class="text-center">
+                        <input type="checkbox" ng-model="isAllChecked">
+                    </th>
+                    <th class="clearfix" style="width: 40%;">
+                        <a href="javascript:void(0)" class="pull-left" ng-click="sort('questionText')">Question</a>
+                        <span class="glyphicon glyphicon-triangle-bottom pull-right"
+                              ng-show="event.columns[0].clickCount === 1"></span>
+                        <span class="glyphicon glyphicon-triangle-top pull-right"
+                              ng-show="event.columns[0].clickCount === 2"></span>
+                    </th>
+                    <th class="clearfix">
+                        <a href="javascript:void(0)" class="pull-left" ng-click="sort('correctAnswer')">Correct
+                            Answer</a>
+                        <span class="glyphicon glyphicon-triangle-bottom pull-right"
+                              ng-show="event.columns[1].clickCount === 1"></span>
+                        <span class="glyphicon glyphicon-triangle-top pull-right"
+                              ng-show="event.columns[1].clickCount === 2"></span>
+                    </th>
+                    <th class="clearfix">
+                        <a href="javascript:void(0)" class="pull-left" ng-click="sort('wrongAnswer1')">Wrong Answer
+                            1</a>
+                        <span class="glyphicon glyphicon-triangle-bottom pull-right"
+                              ng-show="event.columns[2].clickCount === 1"></span>
+                        <span class="glyphicon glyphicon-triangle-top pull-right"
+                              ng-show="event.columns[2].clickCount === 2"></span>
+                    </th>
+                    <th class="clearfix">
+                        <a href="javascript:void(0)" class="pull-left" ng-click="sort('wrongAnswer2')">Wrong Answer
+                            2</a>
+                        <span class="glyphicon glyphicon-triangle-bottom pull-right"
+                              ng-show="event.columns[3].clickCount === 1"></span>
+                        <span class="glyphicon glyphicon-triangle-top pull-right"
+                              ng-show="event.columns[3].clickCount === 2"></span>
+                    </th>
+                    <th class="clearfix">
+                        <a href="javascript:void(0)" class="pull-left" ng-click="sort('wrongAnswer3')">Wrong Answer
+                            3</a>
+                        <span class="glyphicon glyphicon-triangle-bottom pull-right"
+                              ng-show="event.columns[4].clickCount === 1"></span>
+                        <span class="glyphicon glyphicon-triangle-top pull-right"
+                              ng-show="event.columns[4].clickCount === 2"></span>
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in questionList">
+                    <td class="text-center">
+                        <input type="checkbox" id="chk_{{item.id}}" ng-model="ids[item.id]"></td>
+                    <td>{{item.text}}</td>
+                    <td>{{item.correctAnswer}}</td>
+                    <td>{{item.wrongAnswer1}}</td>
+                    <td>{{item.wrongAnswer2}}</td>
+                    <td>{{item.wrongAnswer3}}</td>
+                    <td>
+                        <a ui-sref="home.question.edit({id: item.id})" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav>
+                <ul class="pager">
+                    <li ng-class="{'disabled': grid.CURRENT_PAGE === 1}">
+                        <a href="javascript:void(0);" ng-click="previous()">Previous</a></li>
+                    <li>{{grid.CURRENT_PAGE}} / {{grid.NUM_PAGES}}</li>
+                    <li ng-class="{'disabled': grid.CURRENT_PAGE === grid.NUM_PAGES}">
+                        <a href="javascript:void(0);" ng-click="next()">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<div style="z-index: 5000;" id="loadingDiv" ng-show="loadingDiv">
+    <table align="center">
+        <tr>
+            <td style="padding-top:270px;" align="center"><img src="images/waiting.gif"/></td>
+        </tr>
+    </table>
+</div>
+<script type="text/ng-template" id="modalQSNFilter.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Search</h4>
+    </div>
+    <div class="modal-body">
+        <form role="form" novalidate>
+            <div class="form-group">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="CategoryName" value="CN" ng-model="searchType"/> Category Name</label>
+                    &nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="CategoryName" value="QSN" ng-model="searchType"/> Question Set
+                        Name</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="{{searchTypeDesc}}" ng-model="searchText">
+					<span class="input-group-btn">
+            			<button class="btn btn-primary" type="button" ng-click="ok()">Search</button>
+          			</span>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>

@@ -1,0 +1,155 @@
+<div class="container">
+    <div class="page-header">
+        <a ui-sref="home.option" class="pull-left btn btn-default box-shadow--16dp" style="margin-right: 10px">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+        <h1 style="color: white;">Photo &amp; Biography</h1>
+    </div>
+    <div class="panel panel-default box-shadow--16dp" style="margin-bottom: 15px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span ng-show="!isEdit">Create</span><span ng-show="isEdit">Edit</span>
+                (Field marked with * are mandatory)</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <img ng-src="{{imageSource}}" alt="image preview" class="img-thumbnail"
+                         style="width: 256px; height: 256px;" ng-click="triggerFileUpload()">
+                    <input type="file" id="InputBiography" class="form-control"
+                           style="margin-top: -43px; visibility: hidden;"
+                           onchange="angular.element(this).scope().fileNameChanged()"/>
+                </div>
+                <div class="col-sm-9">
+                    <form role="form" ng-submit="addUpdate()" novalidate>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Title of the Picture<span
+                                        class="glyphicon glyphicon-asterisk required"></span></label>
+                                    <input class="form-control" type="text" ng-model="biography.title"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Category Name</label>
+                                    <a href="javascript:void(0);" class="pull-right" ng-click="redirectToCategory()">[Add new]</a>
+                                    <select class="form-control" ng-model="biography.category"
+                                            ng-options="item.name for item in categoryList track by item.id"
+                                            ng-change="ddlCategory_OnChange()">
+                                        <option value="">Select...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Question Set Name</label>
+                                    <a href="javascript:void(0);" class="pull-right" ng-click="redirectToQuestionSet()">[Add new]</a>
+                                    <select class="form-control" ng-model="biography.questionSet"
+                                            ng-options="item.name for item in questionSetList track by item.id">
+                                        <option value="">Select...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Biography<span
+                                        class="glyphicon glyphicon-asterisk required"></span></label>
+                                    <textarea class="form-control" cols="30" rows="9"
+                                              ng-model="biography.description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success box-shadow--16dp" ng-show="!isEdit">
+                                <span class="glyphicon glyphicon-floppy-save"></span> Add
+                            </button>
+                            <button type="submit" class="btn btn-success box-shadow--16dp" ng-show="isEdit">
+                                <span class="glyphicon glyphicon-edit"></span> Update
+                            </button>
+                            &nbsp;
+                            <button type="button" class="btn btn-warning box-shadow--16dp" ng-click="reset()">
+                                <span class="glyphicon glyphicon-erase"></span> Reset
+                            </button>
+                            &nbsp;
+                            <button type="button" class="btn btn-primary box-shadow--16dp" ng-click="showFilter()">
+                                <span class="glyphicon glyphicon-filter"></span> Search
+                            </button>
+                            &nbsp;
+                            <button type="button" class="btn btn-danger box-shadow--16dp" ng-disabled="!isEdit"
+                                    ng-click="remove()">
+                                <span class="glyphicon glyphicon-trash"></span> Delete
+                            </button>
+                            &nbsp;
+                            <button type="button" class="btn btn-info box-shadow--16dp" ng-click="refresh()">
+                                <span class="glyphicon glyphicon-refresh"></span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" ng-show="biographyList.length <= 0">
+            <div class="alert alert-info">No records found</div>
+        </div>
+        <table class="table table-striped table-hover" ng-show="biographyList.length > 0">
+            <caption>List of all Biographies</caption>
+            <thead>
+            <tr>
+                <th class="clearfix" width="40%">
+                    <a href="javascript:void(0)" class="pull-left" ng-click="sort('title')">Picture Title</a>
+                    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[0].clickCount === 1"></span>
+                    <span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[0].clickCount === 2"></span>
+                </th>
+                <th class="clearfix" width="60%">
+                    <a href="javascript:void(0)" class="pull-left" ng-click="sort('description')">Picture Description</a>
+                    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-show="event.columns[1].clickCount === 1"></span>
+                    <span class="glyphicon glyphicon-triangle-top pull-right" ng-show="event.columns[1].clickCount === 2"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-click="editBiography(item)" ng-repeat="item in biographyList">
+                <td>{{item.title}}</td>
+                <td>{{item.description | limitToText}}</td>
+            </tr>
+            <!--<tr ng-click="editBiography(item)" ng-repeat="item in biographyList"
+                uib-popover="{{item.description}}" popover-trigger="mouseenter" popover-placement="bottom" >
+                <td>{{item.title}}</td>
+                <td>{{item.description | limitToText}}</td>
+            </tr>-->
+            </tbody>
+        </table>
+        <nav ng-show="biographyList.length > 0">
+            <ul class="pager">
+                <li ng-class="{'disabled': grid.CURRENT_PAGE === 1}">
+                    <a href="javascript:void(0);" ng-click="previous()">Previous</a></li>
+                <li>{{grid.CURRENT_PAGE}} / {{grid.NUM_PAGES}}</li>
+                <li ng-class="{'disabled': grid.CURRENT_PAGE === grid.NUM_PAGES}">
+                    <a href="javascript:void(0);" ng-click="next()">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div style="z-index: 5000;" id="loadingDiv" ng-show="loadingDiv">
+    <table align="center">
+        <tr>
+            <td style="padding-top:270px;" align="center"><img src="images/waiting.gif" /></td>
+        </tr>
+    </table>
+</div>
+<script type="text/ng-template" id="modalFilter.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Search</h4>
+    </div>
+    <div class="modal-body">
+        <form role="form" novalidate>
+            <div class="form-group">
+                <label class="control-label">Picture Title/Description (Few Letters)</label>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="search.text">
+					<span class="input-group-btn">
+				    <button class="btn btn-primary" type="button" ng-click="ok()">Search</button>
+			    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
